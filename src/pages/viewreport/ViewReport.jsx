@@ -9,30 +9,24 @@ import { db } from "../../firebase";
 const ViewReport = () => {
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  const newId = queryParams.get("id");
+  const reportId = queryParams.get("id");
 
-  const [newData, setNewData] = useState(null);
+  const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchEventData = async () => {
-      if (newId) {
-        const eventDoc = await getDoc(doc(db, "news", newId));
-        setNewData({ id: eventDoc.id, ...eventDoc.data() });
+    const fetchReportData = async () => {
+      if (reportId) {
+        const reportDoc = await getDoc(doc(db, "reports", reportId));
+        setReportData({ id: reportDoc.id, ...reportDoc.data() });
         setLoading(false);
       }
     };
 
-    fetchEventData();
-  }, [newId]);
+    fetchReportData();
+  }, [reportId]);
 
-  const formatTimestamp = (timestamp) => {
-    const dateObject = timestamp.toDate(); // Convert timestamp to Date object
-    const formattedDate = dateObject.toLocaleDateString(); // Format Date object as string
-    return formattedDate;
-  };
-
-  console.log(setNewData);
+  console.log(setReportData);
   return (
     <div className="single">
       <Sidebar />
@@ -42,33 +36,27 @@ const ViewReport = () => {
           <p>Loading...</p>
         ) : (
           <>
-            <div className="top">
-              <div className="left">
-                <div className="item">
-                  <img
-                    src={
-                      newData.image ||
-                      "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                    }
-                    alt=""
-                    className="event-itemImg"
-                  />
-                </div>{" "}
-              </div>{" "}
-            </div>{" "}
             <div className="bottom">
               <div className="details">
-                <h1 className="event-itemTitle"> {newData.title} </h1>{" "}
+                <h1 className="event-itemTitle"> {reportData.title} </h1>{" "}
                 <div className="detailItem">
-                  <span className="itemKey"> Description: </span>{" "}
-                  <span className="itemValue"> {newData.description} </span>{" "}
+                  <span className="itemKey"> FullName: </span>{" "}
+                  <span className="itemValue"> {reportData.fullName} </span>{" "}
                 </div>{" "}
                 <div className="detailItem">
-                  <span className="itemKey"> BeginTime: </span>{" "}
+                  <span className="itemKey"> StudentID: </span>{" "}
+                  <span className="itemValue"> {reportData.mssv} </span>{" "}
+                </div>{" "}
+                <div className="detailItem">
+                  <span className="itemKey"> ReportContent: </span>{" "}
                   <span className="itemValue">
                     {" "}
-                    {formatTimestamp(newData.time)}{" "}
+                    {reportData.reportContent}{" "}
                   </span>{" "}
+                </div>{" "}
+                <div className="detailItem">
+                  <span className="itemKey"> Feedback: </span>{" "}
+                  <span className="itemValue"> {reportData.feedback} </span>{" "}
                 </div>{" "}
               </div>{" "}
             </div>{" "}

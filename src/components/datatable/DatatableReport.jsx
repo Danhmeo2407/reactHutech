@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { eventColumns } from "../../datatablesource";
+import { reportsColumns } from "../../datatablesource";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
@@ -12,7 +13,7 @@ const DatatableReport = ({ type }) => {
 
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "events"),
+      collection(db, "reports"),
       (snapShot) => {
         let list = [];
         snapShot.forEach((doc) => {
@@ -30,35 +31,19 @@ const DatatableReport = ({ type }) => {
     };
   }, []);
 
-  const handleViewEvent = (id) => {
+  const handleViewReport = (id) => {
     setSelectedReportId(id);
-    navigate(`/events/events?id=${id}`);
+    navigate(`/reports/reports?id=${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "events", id));
+      await deleteDoc(doc(db, "reports", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
     }
   };
-
-  const formatTimestamp = (timestamp) => {
-    const dateObject = timestamp.toDate();
-    return dateObject.toLocaleDateString();
-  };
-
-  const timestampColumn = [
-    {
-      field: "beginTime",
-      headerName: "BeginTime",
-      width: 200,
-      renderCell: (params) => (
-        <div className="cellTimestamp">{formatTimestamp(params.value)}</div>
-      ),
-    },
-  ];
 
   const actionColumn = [
     {
@@ -69,14 +54,14 @@ const DatatableReport = ({ type }) => {
         return (
           <div className="cellAction">
             <Link
-              to={`/events/events?id=${params.row.id}`}
+              to={`/reports/reports?id=${params.row.id}`}
               style={{ textDecoration: "none" }}
-              onClick={() => handleViewEvent(params.row.id)}
+              onClick={() => handleViewReport(params.row.id)}
             >
               <div className="viewButton"> View </div>
             </Link>{" "}
             <Link
-              to={`/events/update/${params.row.id}`}
+              to={`/reports/update/${params.row.id}`}
               style={{ textDecoration: "none" }}
             >
               <div className="updateButton">Update</div>
@@ -94,16 +79,10 @@ const DatatableReport = ({ type }) => {
   ];
   return (
     <div className="datatable">
-      <div className="datatableTitle">
-        Add New Event{" "}
-        <Link to="/events/new" className="link">
-          Add New{" "}
-        </Link>{" "}
-      </div>{" "}
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={eventColumns.concat(timestampColumn, actionColumn)}
+        columns={reportsColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

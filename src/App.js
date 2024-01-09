@@ -21,6 +21,7 @@ import UpdateNew from "./pages/update/UpdateNew";
 import ListReport from "./pages/list/ListReport";
 import ViewReport from "./pages/viewreport/ViewReport";
 import NewReport from "./pages/new/NewReport";
+import UpdateReport from "./pages/update/UpdateReport";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -122,9 +123,9 @@ function App() {
                 element={
                   <RequireAuth>
                     {" "}
-                    <UpdateNew
+                    <UpdateReport
                       inputs={reportInputs}
-                      title="Update NewsPaper"
+                      title="Update Feedback"
                     />{" "}
                   </RequireAuth>
                 }
