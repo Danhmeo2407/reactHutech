@@ -1,14 +1,50 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource";
+import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../firebase";
+const Datatable = ({ type }) => {
+  const [data, setData] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-const Datatable = () => {
-  const [data, setData] = useState(userRows);
+  useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "users"),
+      (snapShot) => {
+        let list = [];
+        snapShot.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        setData(list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    return () => {
+      unsub();
+    };
+  }, []);
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "users", id));
+      setData(data.filter((item) => item.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleViewUsers = (id) => {
+    setSelectedUserId(id);
   };
 
   const actionColumn = [
@@ -19,28 +55,39 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
+            <Link
+              to={`/users/users?id=${params.row.id}`}
+              style={{ textDecoration: "none" }}
+              onClick={() => handleViewUsers(params.row.id)}
+            >
+              <div className="viewButton"> View </div>{" "}
+            </Link>{" "}
+            <Link
+              to={`/users/update/${params.row.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="updateButton">Update</div>
             </Link>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
-              Delete
-            </div>
+              Delete{" "}
+            </div>{" "}
           </div>
         );
       },
     },
   ];
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
+        Add New User{" "}
         <Link to="/users/new" className="link">
-          Add New
-        </Link>
-      </div>
+          Add New{" "}
+        </Link>{" "}
+      </div>{" "}
       <DataGrid
         className="datagrid"
         rows={data}

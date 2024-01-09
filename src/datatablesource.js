@@ -1,5 +1,6 @@
 export const userColumns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 250 },
+  { field: "displayName", headerName: "Name", width: 150 },
   {
     field: "user",
     headerName: "User",
@@ -7,8 +8,8 @@ export const userColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          <img className="cellImg" src={params.row.img} alt="avatar" />
-          {params.row.username}
+          <img className="cellImg" src={params.row.image} alt="avatar" />{" "}
+          {params.row.username}{" "}
         </div>
       );
     },
@@ -16,108 +17,140 @@ export const userColumns = [
   {
     field: "email",
     headerName: "Email",
-    width: 230,
+    width: 300,
   },
 
   {
-    field: "age",
-    headerName: "Age",
-    width: 100,
+    field: "studentId",
+    headerName: "ID Student",
+    width: 150,
   },
   {
-    field: "status",
-    headerName: "Status",
-    width: 160,
+    field: "class",
+    headerName: "Class",
+    width: 150,
+  },
+  {
+    field: "faculty",
+    headerName: "Faculty",
+    width: 150,
+  },
+];
+
+export const eventColumns = [
+  { field: "id", headerName: "ID", width: 170 },
+  {
+    field: "poster",
+    headerName: "Poster",
+    width: 100,
     renderCell: (params) => {
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className="cellWithImg">
+          <img
+            className="cellImg"
+            src={
+              params.row.image
+                ? params.row.image
+                : "https://firebasestorage.googleapis.com/v0/b/react-64fdf.appspot.com/o/events%2F1704474045866logo_hutech.png?alt=media&token=4b893ebc-df15-4103-9200-8f2c5a847a86"
+            }
+            alt="poster"
+          />
         </div>
       );
     },
   },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 400,
+  },
+
+  {
+    field: "beginTime",
+    headerName: "BeginTime",
+    width: 200,
+  },
+  {
+    field: "location",
+    headerName: "Location",
+    width: 200,
+  },
+  {
+    field: "faculty",
+    headerName: "Faculty",
+    width: 150,
+  },
+  {
+    field: "quantity",
+    headerName: "Quantity",
+    width: 100,
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    width: 100,
+  },
 ];
 
-//temporary data
-export const userRows = [
+export const newsColumns = [
+  { field: "id", headerName: "ID", width: 170 },
   {
-    id: 1,
-    username: "Snow",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    status: "active",
-    email: "1snow@gmail.com",
-    age: 35,
+    field: "image",
+    headerName: "Image",
+    width: 100,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+          <img
+            className="cellImg"
+            src={
+              params.row.image
+                ? params.row.image
+                : "https://firebasestorage.googleapis.com/v0/b/react-64fdf.appspot.com/o/events%2F1704474045866logo_hutech.png?alt=media&token=4b893ebc-df15-4103-9200-8f2c5a847a86"
+            }
+            alt="poster"
+          />
+        </div>
+      );
+    },
   },
   {
-    id: 2,
-    username: "Jamie Lannister",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "2snow@gmail.com",
-    status: "passive",
-    age: 42,
+    field: "title",
+    headerName: "Title",
+    width: 400,
   },
   {
-    id: 3,
-    username: "Lannister",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "3snow@gmail.com",
-    status: "pending",
-    age: 45,
+    field: "time",
+    headerName: "Time",
+    width: 200,
   },
   {
-    id: 4,
-    username: "Stark",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "4snow@gmail.com",
-    status: "active",
-    age: 16,
+    field: "description",
+    headerName: "Description",
+    width: 100,
+  },
+];
+
+export const reportsColumns = [
+  { field: "userUid", headerName: "UserUid", width: 170 },
+  {
+    field: "fullName",
+    headerName: "FullName",
+    width: 400,
   },
   {
-    id: 5,
-    username: "Targaryen",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "5snow@gmail.com",
-    status: "passive",
-    age: 22,
+    field: "mssv",
+    headerName: "Mssv",
+    width: 200,
   },
   {
-    id: 6,
-    username: "Melisandre",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "6snow@gmail.com",
-    status: "active",
-    age: 15,
+    field: "reportContent",
+    headerName: "ReportContent",
+    width: 100,
   },
   {
-    id: 7,
-    username: "Clifford",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "7snow@gmail.com",
-    status: "passive",
-    age: 44,
-  },
-  {
-    id: 8,
-    username: "Frances",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "8snow@gmail.com",
-    status: "active",
-    age: 36,
-  },
-  {
-    id: 9,
-    username: "Roxie",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "snow@gmail.com",
-    status: "pending",
-    age: 65,
-  },
-  {
-    id: 10,
-    username: "Roxie",
-    img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    email: "snow@gmail.com",
-    status: "active",
-    age: 65,
+    field: "feedback",
+    headerName: "Feedback",
+    width: 100,
   },
 ];

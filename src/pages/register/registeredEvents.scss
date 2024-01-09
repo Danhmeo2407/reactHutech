@@ -1,0 +1,16 @@
+/* Thêm class "registered-event-item" vào phần tử li để tạo kiểu dáng cho sự kiện */
+.registered-event-item {
+    list-style: none; /* Ẩn dấu chấm danh sách */
+    margin-bottom: 10px; 
+    margin-top: 20px;
+  }
+  
+  .event-name {
+    font-weight: bold; 
+  }
+  
+  .status-id {
+    color: #555; 
+    font-weight: bold;
+  }
+  
