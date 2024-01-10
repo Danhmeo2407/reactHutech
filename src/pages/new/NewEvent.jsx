@@ -20,7 +20,7 @@ const NewEvent = ({ inputs, title }) => {
     const uploadFile = async () => {
       if (file) {
         const fileName = new Date().getTime() + file.name;
-        const storageRef = ref(storage, "poster/" + fileName);
+        const storageRef = ref(storage, "events/" + fileName);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(

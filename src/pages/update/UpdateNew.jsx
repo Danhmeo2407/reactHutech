@@ -6,7 +6,6 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { Timestamp } from "firebase/firestore";
 
 const UpdateNew = ({ inputs, title }) => {
   const { newId } = useParams();
@@ -67,10 +66,6 @@ const UpdateNew = ({ inputs, title }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
-    if (data.time) {
-      data.time = Timestamp.fromDate(new Date(data.time));
-    }
 
     try {
       const newsRef = doc(db, "news", newId);

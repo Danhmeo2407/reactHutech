@@ -1,15 +1,10 @@
+/* eslint-disable no-unused-vars */
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 const Datatable = ({ type }) => {
   const [data, setData] = useState([]);

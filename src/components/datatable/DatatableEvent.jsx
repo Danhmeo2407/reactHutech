@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { eventColumns } from "../../datatablesource";

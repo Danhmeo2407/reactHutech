@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { eventColumns, newsColumns } from "../../datatablesource";
+import { newsColumns } from "../../datatablesource";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
