@@ -36,7 +36,7 @@ const NewEvent = ({ inputs, title }) => {
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setData((prev) => ({ ...prev, image: downloadURL }));
+              setData((prev) => ({ ...prev, poster: downloadURL }));
             });
           }
         );
@@ -66,10 +66,8 @@ const NewEvent = ({ inputs, title }) => {
 
     const currentDate = new Date();
 
-    // Add 2 days to the current date
     currentDate.setDate(currentDate.getDate() + 2);
 
-    // Set the beginTime in the data object
     data.beginTime = Timestamp.fromDate(currentDate);
 
     if (data.quantity) {
