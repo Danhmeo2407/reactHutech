@@ -17,7 +17,7 @@ const RegisteredEvents = ({ userId }) => {
   const fetchRegisteredEvents = async () => {
     try {
       const q = query(
-        collection(db, "registeredEvents"),
+        collection(db, "registeredEvent"),
         where("userId", "==", userId)
       );
 
@@ -27,7 +27,6 @@ const RegisteredEvents = ({ userId }) => {
       for (const docRef of querySnapshot.docs) {
         const eventData = docRef.data();
 
-        // Additional query to get event details
         const eventDoc = await getDoc(doc(db, "events", eventData.eventId));
         const eventDetails = { id: eventDoc.id, ...eventDoc.data() };
 
