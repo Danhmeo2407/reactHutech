@@ -64,7 +64,13 @@ const NewEvent = ({ inputs, title }) => {
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    data.beginTime = Timestamp.fromDate(new Date());
+    const currentDate = new Date();
+
+    // Add 2 days to the current date
+    currentDate.setDate(currentDate.getDate() + 2);
+
+    // Set the beginTime in the data object
+    data.beginTime = Timestamp.fromDate(currentDate);
 
     if (data.quantity) {
       data.quantity = parseInt(data.quantity, 10);
