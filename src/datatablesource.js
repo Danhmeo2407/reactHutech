@@ -49,8 +49,8 @@ export const eventColumns = [
           <img
             className="cellImg"
             src={
-              params.row.image
-                ? params.row.image
+              params.row.poster
+                ? params.row.poster
                 : "https://firebasestorage.googleapis.com/v0/b/react-64fdf.appspot.com/o/events%2F1704474045866logo_hutech.png?alt=media&token=4b893ebc-df15-4103-9200-8f2c5a847a86"
             }
             alt="poster"
