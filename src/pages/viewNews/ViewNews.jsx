@@ -27,8 +27,13 @@ const ViewNews = () => {
   }, [newId]);
 
   const formatTimestamp = (timestamp) => {
-    const dateObject = timestamp.toDate(); // Convert timestamp to Date object
-    const formattedDate = dateObject.toLocaleDateString(); // Format Date object as string
+    const dateObject = timestamp.toDate();
+
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth() + 1;
+    const year = dateObject.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
     return formattedDate;
   };
 

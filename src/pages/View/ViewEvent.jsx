@@ -27,8 +27,8 @@ const ViewEvent = () => {
   }, [eventId]);
 
   const formatTimestamp = (timestamp) => {
-    const dateObject = timestamp.toDate(); // Convert timestamp to Date object
-    const formattedDate = dateObject.toLocaleDateString(); // Format Date object as string
+    const dateObject = timestamp.toDate();
+    const formattedDate = dateObject.toLocaleDateString();
     return formattedDate;
   };
 

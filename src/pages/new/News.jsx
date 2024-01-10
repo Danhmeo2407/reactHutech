@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
@@ -54,12 +54,14 @@ const News = ({ inputs, title }) => {
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    if (data.time) {
-      data.time = Timestamp.fromDate(new Date(data.time));
-    }
+    data.time = Timestamp.fromDate(new Date());
 
     try {
-      await addDoc(collection(db, "news"), data);
+      const docRef = await addDoc(collection(db, "news"), data);
+
+      const id = docRef.id;
+      await setDoc(doc(db, "news", id), { ...data, id });
+
       navigate(-1);
     } catch (err) {
       console.log(err);

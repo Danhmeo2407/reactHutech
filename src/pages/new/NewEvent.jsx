@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ const NewEvent = ({ inputs, title }) => {
     const uploadFile = async () => {
       if (file) {
         const fileName = new Date().getTime() + file.name;
-        const storageRef = ref(storage, "events/" + fileName);
+        const storageRef = ref(storage, "poster/" + fileName);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(
@@ -48,31 +49,47 @@ const NewEvent = ({ inputs, title }) => {
     const id = e.target.id;
     const value = e.target.value;
 
+    let parsedValue = value;
+
+    if (id === "quantity") {
+      const quantity = parseFloat(value);
+      if (!isNaN(quantity)) {
+        parsedValue = quantity;
+      }
+    }
+
     setData({ ...data, [id]: value });
   };
 
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    if (data.beginTime) {
-      data.beginTime = Timestamp.fromDate(new Date(data.beginTime));
+    data.beginTime = Timestamp.fromDate(new Date());
+
+    if (data.quantity) {
+      data.quantity = parseInt(data.quantity, 10);
     }
 
     try {
-      await addDoc(collection(db, "events"), data);
+      const docRef = await addDoc(collection(db, "events"), data);
+
+      const id = docRef.id;
+      await setDoc(doc(db, "events", id), { ...data, id });
+
       navigate(-1);
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
     <div className="new">
       <Sidebar />
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1> {title} </h1>{" "}
-        </div>{" "}
+          <h1>{title}</h1>
+        </div>
         <div className="bottom">
           <div className="left">
             <img
@@ -83,39 +100,38 @@ const NewEvent = ({ inputs, title }) => {
               }
               alt=""
             />
-          </div>{" "}
+          </div>
           <div className="right">
             <form onSubmit={handleAdd}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>{" "}
+                </label>
                 <input
                   type="file"
                   id="file"
                   onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
-                />{" "}
-              </div>{" "}
+                />
+              </div>
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
-                  <label> {input.label} </label>{" "}
+                  <label>{input.label}</label>
                   <input
                     id={input.id}
                     type={input.type}
                     placeholder={input.placeholder}
                     onChange={handleInput}
-                  />{" "}
+                  />
                 </div>
-              ))}{" "}
+              ))}
               <button disabled={per != null && per < 100} type="submit">
-                {" "}
-                Send{" "}
-              </button>{" "}
-            </form>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>{" "}
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

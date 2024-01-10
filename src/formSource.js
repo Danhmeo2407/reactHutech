@@ -61,12 +61,6 @@ export const newInputs = [
     type: "text",
     placeholder: "Description",
   },
-  {
-    id: "time",
-    label: "Time",
-    type: "timestamp",
-    placeholder: "Example: 15/01/2024",
-  },
 ];
 
 export const eventInputs = [
@@ -89,12 +83,6 @@ export const eventInputs = [
     placeholder: "Example: Công nghệ thông tin",
   },
   {
-    id: "beginTime",
-    label: "BeginTime",
-    type: "timestamp",
-    placeholder: "Example: 15/01/2024",
-  },
-  {
     id: "location",
     label: "Location",
     type: "text",
@@ -104,7 +92,7 @@ export const eventInputs = [
     id: "quantity",
     label: "Quantity",
     type: "number",
-    placeholder: "Quantity",
+    placeholder: "Example: 120",
   },
 ];
 
